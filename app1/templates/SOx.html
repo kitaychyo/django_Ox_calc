@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расчет выбросов ТЭС</title>
+    <style>
+        :root {
+            --primary-color: #D17FF6;
+            --primary-hover: #510075;
+            --secondary-color: #6c757d;
+            --background: #f8f9fa;
+            --sidebar-bg: #343a40;
+            --sidebar-text: #dee2e6;
+            --sidebar-hover: #495057;
+            --container-bg: white;
+            --text-color: #212529;
+            --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            --border-radius: 0.375rem;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text-color);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            padding: 20px 0;
+            transition: var(--transition);
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-menu li {
+            position: relative;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-menu a:hover {
+            background-color: var(--sidebar-hover);
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .sidebar-menu a.active {
+            background-color: var(--sidebar-hover);
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .card {
+            background-color: var(--container-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(74, 111, 165, 0.25);
+        }
+
+        .results {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+        }
+
+        .results p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3>Меню</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="{% url 'home' %}">Главная</a></li>
+            <li><a href="{% url 'NOx' %}">NOx (процесс)</a></li>
+            <li><a href="{% url 'NOx_fuel' %}">NOx (топливо)</a></li>
+            <li><a href="{% url 'SOx' %}" class="active">SOx</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="card">
+            <h1>Расчет выбросов оксидов серы</h1>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Расход топлива (B, кг/с)</label><br>
+                        <input type="number" step="0.01" name="B" value="{{ form_data.B }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Содержание серы (S_r, %)</label><br>
+                        <input type="number" step="0.01" name="S_r" value="{{ form_data.S_r }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Доля оксидов серы, связываемых летучей золой в котле (n1_SO2)</label>
+                        <input type="number" step="0.01" name="n1_SO2" value="{{ form_data.n1_SO2 }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Доля оксидов серы, улавливаемых в мокром золоуловителе (n2_SO2)</label>
+                        <input type="number" step="0.01" name="n2_SO2" value="{{ form_data.n2_SO2 }}" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">Рассчитать выбросы оксида серы</button>
+
+                {% if form_data.itog %}
+                <div class="results">
+                    <h2>Результаты расчёта:</h2>
+                    <p>Выбросы оксида серы (г/с): {{form_data.itog}}</p>
+                </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</body>
+</html>
