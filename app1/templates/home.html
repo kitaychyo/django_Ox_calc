@@ -1,195 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная страница</title>
-    <style>
-        :root {
-            --primary-color: #D17FF6;
-            --primary-hover: #510075;
-            --secondary-color: #6c757d;
-            --background: #f8f9fa;
-            --sidebar-bg: #343a40;
-            --sidebar-text: #dee2e6;
-            --sidebar-hover: #495057;
-            --container-bg: white;
-            --text-color: #212529;
-            --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-            --border-radius: 0.375rem;
-            --transition: all 0.3s ease;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background);
-            color: var(--text-color);
-            display: flex;
-            min-height: 100vh;
-        }
-
-        .sidebar {
-            width: 250px;
-            background-color: var(--sidebar-bg);
-            color: var(--sidebar-text);
-            padding: 20px 0;
-            transition: var(--transition);
-            position: fixed;
-            height: 100%;
-            overflow-y: auto;
-        }
-
-        .sidebar-header {
-            padding: 0 20px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .sidebar-menu {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .sidebar-menu li {
-            position: relative;
-        }
-
-        .sidebar-menu a {
-            display: block;
-            padding: 12px 20px;
-            color: var(--sidebar-text);
-            text-decoration: none;
-            transition: var(--transition);
-            border-left: 3px solid transparent;
-        }
-
-        .sidebar-menu a:hover {
-            background-color: var(--sidebar-hover);
-            border-left: 3px solid var(--primary-color);
-        }
-
-        .sidebar-menu a.active {
-            background-color: var(--sidebar-hover);
-            border-left: 3px solid var(--primary-color);
-        }
-
-        .main-content {
-            flex: 1;
-            margin-left: 250px;
-            padding: 30px;
-        }
-
-        .card {
-            background-color: var(--container-bg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            padding: 30px;
-            margin-bottom: 30px;
-        }
-
-        h1, h2, h3 {
-            color: var(--primary-color);
-            margin-top: 0;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .btn:hover {
-            background-color: var(--primary-hover);
-            color: white;
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary-color);
-        }
-
-        .btn-secondary:hover {
-            background-color: #5a6268;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ced4da;
-            border-radius: var(--border-radius);
-            font-size: 16px;
-            transition: var(--transition);
-        }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.2rem rgba(74, 111, 165, 0.25);
-        }
-
-        .results {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: var(--border-radius);
-            margin-top: 20px;
-        }
-
-        .results p {
-            margin: 10px 0;
-            font-size: 16px;
-        }
-
-        .image-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .image-container img {
-            max-width: 100%;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-        }
-
-        .image-caption {
-            margin-top: 10px;
-            font-style: italic;
-            color: var(--secondary-color);
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-            .main-content {
-                margin-left: 0;
-            }
-        }
-    </style>
+    <title>Калькулятор выбросов ТЭС | Главная</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <div class="sidebar">
         <div class="sidebar-header">
-            <h3>Меню</h3>
+            <h3>Калькулятор ТЭС</h3>
         </div>
         <ul class="sidebar-menu">
             <li><a href="{% url 'home' %}" class="active">Главная</a></li>
@@ -202,12 +23,41 @@
     <div class="main-content">
         <div class="card">
             <h1>Калькулятор выбросов оксидов азота и серы для котлов ТЭС</h1>
+            <p>Профессиональный инструмент для точного расчёта выбросов при сжигании различных видов топлива. Оптимизируйте экологические показатели вашей теплоэлектростанции.</p>
+
+            <div class="feature-list">
+                <div class="feature-item">
+                    <h3><i>📊</i> Точные расчёты</h3>
+                    <p>Использование актуальных методик расчёта выбросов согласно экологическим нормативам</p>
+                </div>
+                <div class="feature-item">
+                    <h3><i>⚡</i> Быстрый результат</h3>
+                    <p>Мгновенное получение данных без сложных вычислений</p>
+                </div>
+                <div class="feature-item">
+                    <h3><i>🌱</i> Экологический контроль</h3>
+                    <p>Помощь в снижении вредных выбросов и соблюдении нормативов</p>
+                </div>
+            </div>
 
             <h2>Как это работает?</h2>
-            <p>1. Выберите нужный калькулятор в меню слева</p>
-            <p>2. Введите параметры топлива и условий сжигания</p>
-            <p>3. Получите точный расчёт выбросов оксидов азота (NOx) или серы (SOx)</p>
 
+            <div class="steps">
+                <div class="step">
+                    <h3>Выберите калькулятор</h3>
+                    <p>В левом меню выберите нужный тип расчёта: NOx для угля, NOx для топлива или SOx</p>
+                </div>
+                <div class="step">
+                    <h3>Введите параметры</h3>
+                    <p>Укажите характеристики топлива и условия работы котла</p>
+                </div>
+                <div class="step">
+                    <h3>Получите результат</h3>
+                    <p>Система мгновенно рассчитает объёмы выбросов и предоставит наглядный отчёт</p>
+                </div>
+            </div>
+
+            <a href="{% url 'NOx' %}" class="btn">Начать расчёт <i>→</i></a>
         </div>
     </div>
 </body>
