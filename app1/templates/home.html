@@ -157,6 +157,23 @@
             font-size: 16px;
         }
 
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .image-caption {
+            margin-top: 10px;
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 100%;
@@ -176,7 +193,7 @@
         </div>
         <ul class="sidebar-menu">
             <li><a href="{% url 'home' %}" class="active">Главная</a></li>
-            <li><a href="{% url 'NOx' %}">NOx (процесс)</a></li>
+            <li><a href="{% url 'NOx' %}">NOx (уголь)</a></li>
             <li><a href="{% url 'NOx_fuel' %}">NOx (топливо)</a></li>
             <li><a href="{% url 'SOx' %}">SOx</a></li>
         </ul>
@@ -184,8 +201,15 @@
 
     <div class="main-content">
         <div class="card">
-            <h1>Выбор расчета</h1>
-            <p>Тут можно написать что-то умное</p>
+            <h1>Калькулятор оксидативных процессов</h1>
+            <p>Профессиональный инструмент для расчёта выбросов NOx и SOx при сжигании угля и других видов топлива.</p>
+
+
+            <h2>Как это работает?</h2>
+            <p>1. Выберите нужный калькулятор в меню слева</p>
+            <p>2. Введите параметры топлива и условий сжигания</p>
+            <p>3. Получите точный расчёт выбросов оксидов азота (NOx) или серы (SOx)</p>
+
         </div>
     </div>
 </body>
