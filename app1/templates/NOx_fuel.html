@@ -14,9 +14,9 @@
         </div>
         <ul class="sidebar-menu">
             <li><a href="{% url 'home' %}">Главная</a></li>
-            <li><a href="{% url 'NOx' %}">NOx (уголь)</a></li>
-            <li><a href="{% url 'NOx_fuel' %}" class="active">NOx (топливо)</a></li>
-            <li><a href="{% url 'SOx' %}">SOx</a></li>
+            <li><a href="{% url 'NOx' %}">Расчет выбросов оксидов азота (уголь)</a></li>
+            <li><a href="{% url 'NOx_fuel' %}" class="active">Расчет выбросов оксидов азота (топливо)</a></li>
+            <li><a href="{% url 'SOx' %}">Расчет выбросов оксидов серы</a></li>
         </ul>
     </div>
 
@@ -27,7 +27,7 @@
             <form method="post">
                 {% csrf_token %}
 
-                <div class="form-grid">
+                <div class="form-container">
                     <div class="form-group">
                         <label>Ожидаемая адиабатная температура (T_ad, К)</label>
                         <input type="number" step="0.01" name="T_ad" value="{{ form_data.T_ad }}" required>
@@ -39,12 +39,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Ширина топки (a_T, м)</label> <br>
+                        <label>Ширина топки (a_T, м)</label>
                         <input type="number" step="0.01" name="a_T" value="{{ form_data.a_T }}" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Глубина топки (b_T, м)</label> <br>
+                        <label>Глубина топки (b_T, м)</label>
                         <input type="number" step="0.01" name="b_T" value="{{ form_data.b_T }}" required>
                     </div>
 
@@ -54,7 +54,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Расход топлива (Bp, м³/с)</label> <br>
+                        <label>Расход топлива (Bp, м³/с)</label>
                         <input type="number" step="0.01" name="Bp" value="{{ form_data.Bp }}" required>
                     </div>
 
@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Коэффициент заполнения камеры (xi)</label><br>
+                        <label>Коэффициент заполнения камеры (xi)</label>
                         <input type="number" step="0.01" name="xi" value="{{ form_data.xi }}" required>
                     </div>
 
@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Тип топлива</label><br>
+                        <label>Тип топлива</label>
                         <select name="fuel_type">
                             <option value="газ" {% if form_data.fuel_type == 'газ' %}selected{% endif %}>Газ</option>
                             <option value="уголь" {% if form_data.fuel_type == 'уголь' %}selected{% endif %}>Уголь</option>
@@ -93,12 +93,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Содержание азота (Nr, доля)</label><br>
+                        <label>Содержание азота (Nr, доля)</label>
                         <input type="number" step="0.0001" name="Nr" value="{{ form_data.Nr }}" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Объем продуктов сгорания (Vr, м³/м³)</label><br>
+                        <label>Объем продуктов сгорания (Vr, м³/м³)</label>
                         <input type="number" step="0.01" name="Vr" value="{{ form_data.Vr }}" required>
                     </div>
 
@@ -113,17 +113,17 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Доля газов рециркуляции (R)</label><br>
+                        <label>Доля газов рециркуляции (R)</label>
                         <input type="number" step="0.01" name="R" value="{{ form_data.R }}" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Объем дымовых газов (Vg, м³/м³)</label><br>
+                        <label>Объем дымовых газов (Vg, м³/м³)</label>
                         <input type="number" step="0.01" name="Vg" value="{{ form_data.Vg }}" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Коэффициент пересчета (Kp)</label><br>
+                        <label>Коэффициент пересчета (Kp)</label>
                         <input type="number" step="0.01" name="Kp" value="{{ form_data.Kp }}" required>
                     </div>
                 </div>

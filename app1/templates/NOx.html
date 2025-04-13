@@ -14,37 +14,37 @@
         </div>
         <ul class="sidebar-menu">
             <li><a href="{% url 'home' %}">Главная</a></li>
-            <li><a href="{% url 'NOx' %}" class="active">NOx (уголь)</a></li>
-            <li><a href="{% url 'NOx_fuel' %}">NOx (топливо)</a></li>
-            <li><a href="{% url 'SOx' %}">SOx</a></li>
+            <li><a href="{% url 'NOx' %}" class="active">Расчет выбросов оксидов азота (уголь)</a></li>
+            <li><a href="{% url 'NOx_fuel' %}">Расчет выбросов оксидов азота (топливо)</a></li>
+            <li><a href="{% url 'SOx' %}">Расчет выбросов оксидов серы</a></li>
         </ul>
     </div>
 
     <div class="main-content">
         <div class="card">
-            <h1>Расчет выбросов оксидов азота (процесс)</h1>
+            <h1>Расчет выбросов оксидов азота (уголь)</h1>
 
             <form method="post">
                 {% csrf_token %}
 
-                <div class="form-grid">
+                <div class="form-container">
                     <div class="form-group">
-                        <label>Влажность (Wr, %)</label><br>
+                        <label>Влажность (Wr, %)</label>
                         <input type="number" step="0.01" name="Wr" value="{{ form_data.Wr|default_if_none:'' }}" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Зольность (Ar, %)</label><br>
+                        <label>Зольность (Ar, %)</label>
                         <input type="number" step="0.01" name="Ar" value="{{ form_data.Ar|default_if_none:'' }}" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Выход летучих (Vr, %)</label><br>
+                        <label>Выход летучих (Vr, %)</label>
                         <input type="number" step="0.01" name="Vr" value="{{ form_data.Vr|default_if_none:'' }}" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Азот (Nd, %)</label><br>
+                        <label>Азот (Nd, %)</label>
                         <input type="number" step="0.01" name="Nd" value="{{ form_data.Nd|default_if_none:'' }}" required>
                     </div>
 
@@ -94,12 +94,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Теплота сгорания (Qi_r, МДж/кг)</label><br>
+                        <label>Теплота сгорания (Qi_r, МДж/кг)</label>
                         <input type="number" step="0.01" name="Qi_r" value="{{ form_data.Qi_r|default_if_none:'' }}" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Объем дымовых газов (Vg, м3/кг)</label><br>
+                        <label>Объем дымовых газов (Vg, м3/кг)</label>
                         <input type="number" step="0.01" name="Vg" value="{{ form_data.Vg|default_if_none:'' }}" required>
                     </div>
 
