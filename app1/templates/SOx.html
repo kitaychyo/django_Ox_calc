@@ -30,22 +30,22 @@
                 <div class="form-container">
                     <div class="form-group">
                         <label>Расход топлива (B, кг/с)</label>
-                        <input type="number" step="0.01" name="B" value="{{ form_data.B }}" required>
+                        <input type="number" min = "0" step="0.01" name="B" value="{{ form_data.B }}" required>
                     </div>
 
                     <div class="form-group">
                         <label>Содержание серы (S_r, %)</label>
-                        <input type="number" step="0.01" name="S_r" value="{{ form_data.S_r }}" required>
+                        <input type="number" min = "0" step="0.01" name="S_r" value="{{ form_data.S_r }}" required>
                     </div>
 
                     <div class="form-group">
                         <label>Доля оксидов серы, связываемых летучей золой (n1_SO2)</label>
-                        <input type="number" step="0.01" name="n1_SO2" value="{{ form_data.n1_SO2 }}" required>
+                        <input type="number" min = "0" step="0.01" name="n1_SO2" value="{{ form_data.n1_SO2 }}" required>
                     </div>
 
                     <div class="form-group">
                         <label>Доля оксидов серы, улавливаемых в золоуловителе (n2_SO2)</label>
-                        <input type="number" step="0.01" name="n2_SO2" value="{{ form_data.n2_SO2 }}" required>
+                        <input type="number" min = "0" step="0.01" name="n2_SO2" value="{{ form_data.n2_SO2 }}" required>
                     </div>
                 </div>
 

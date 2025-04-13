@@ -48,11 +48,15 @@ def calculate_nox_coal_boiler(params):
 
         # Мощность выброса
         M_NOx = C_NO2 * params['Vg'] * params['Bp'] * params['Kp']
+        if type(K_NO2) is complex: f = 0
+        elif K_NO2 < 0: f = 0
+        else: f = 1
 
         return {
             'specific_emissions': K_NO2,
             'concentration': C_NO2,
-            'emission_power': M_NOx
+            'emission_power': M_NOx,
+            'flag':f
         }
 
     except Exception as e:
@@ -107,10 +111,15 @@ def calculate_nox_gas_oil_boiler(params):
         # Мощность выброса
         M_NOx = NO2_std * params['Vg'] * params['Bp'] * params['Kp']
 
+        if type(NO2) is complex:f = 0
+        elif NO2 < 0: f = 0
+        else: f = 1
+
         return {
             'concentration': NO2,
             'standard_concentration': NO2_std,
-            'emission_power': M_NOx
+            'emission_power': M_NOx,
+            'flag':f
         }
 
     except Exception as e:

@@ -61,6 +61,7 @@ def NOx_fuel(request):
 
         itog = calc.calculate_nox_gas_oil_boiler(coal_params)
         coal_params = {**coal_params, **itog}
+        print(itog)
     return render(request, 'NOx_fuel.html', {'form_data': coal_params})
 
 
