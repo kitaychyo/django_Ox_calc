@@ -1,0 +1,554 @@
+:root {
+    --primary-color: #6a11cb;
+    --primary-hover: #4a0ba3;
+    --secondary-color: #8e9eab;
+    --accent-color: #00c6fb;
+    --background: #f8f9fa;
+    --sidebar-bg: #1a1b2f;
+    --sidebar-text: #ecf0f1;
+    --sidebar-hover: rgba(0, 198, 251, 0.15);
+    --container-bg: white;
+    --text-color: #2c3e50;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.12);
+    --border-radius: 16px;
+    --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --glass-effect: rgba(255, 255, 255, 0.05);
+    --border-light: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--background);
+    color: var(--text-color);
+    display: flex;
+    min-height: 100vh;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Сайдбар с эффектом стекла */
+.sidebar {
+    width: 300px;
+    background: linear-gradient(135deg, var(--sidebar-bg) 0%, #121420 100%);
+    color: var(--sidebar-text);
+    padding: 30px 0;
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-right: 1px solid var(--border-light);
+}
+
+.sidebar-header {
+    padding: 0 30px 30px;
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 20px;
+}
+
+.sidebar-header h3 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-header h3::before {
+    content: "⚡";
+    margin-right: 12px;
+    font-size: 1.4em;
+    background: linear-gradient(45deg, var(--accent-color), #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 5px rgba(0, 198, 251, 0.5));
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 15px 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    position: relative;
+    margin: 5px 0;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    padding: 16px 30px;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    transition: var(--transition);
+    font-weight: 500;
+    font-size: 1.05rem;
+    border-radius: 0 50px 50px 0;
+    margin-right: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-menu a::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--accent-color), var(--primary-color));
+    transform: translateX(-100%);
+    transition: var(--transition);
+}
+
+.sidebar-menu a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--sidebar-hover), transparent);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.sidebar-menu a:hover {
+    background-color: var(--sidebar-hover);
+    padding-left: 35px;
+}
+
+.sidebar-menu a:hover::before {
+    transform: translateX(0);
+}
+
+.sidebar-menu a:hover::after {
+    opacity: 1;
+}
+
+.sidebar-menu a.active {
+    background-color: var(--sidebar-hover);
+    color: white;
+    font-weight: 600;
+}
+
+.sidebar-menu a.active::before {
+    transform: translateX(0);
+}
+
+.sidebar-menu i {
+    margin-right: 15px;
+    font-size: 1.1em;
+    width: 24px;
+    text-align: center;
+}
+
+/* Основное содержимое */
+.main-content {
+    flex: 1;
+    margin-left: 300px;
+    padding: 50px;
+    background-color: var(--background);
+    min-height: 100vh;
+}
+
+/* Карточки с плавными анимациями */
+.card {
+    background-color: var(--container-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 45px;
+    margin-bottom: 35px;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+    transition: var(--transition);
+}
+
+.card:hover::before {
+    width: 8px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+/* Типография */
+h1 {
+    color: var(--primary-color);
+    margin-top: 0;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 25px;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    position: relative;
+    display: inline-block;
+}
+
+h1::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 70px;
+    height: 4px;
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    border-radius: 4px;
+}
+
+h2 {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-top: 40px;
+    margin-bottom: 25px;
+    position: relative;
+    display: inline-block;
+    font-weight: 700;
+}
+
+h2::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+h2:hover::after {
+    width: 80px;
+}
+
+h3 {
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    line-height: 1.7;
+}
+
+/* Кнопки с градиентом и анимацией */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 32px;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-top: 25px;
+    box-shadow: 0 5px 20px rgba(106, 17, 203, 0.3);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--primary-hover), var(--accent-color));
+    opacity: 0;
+    transition: var(--transition);
+    z-index: -1;
+}
+
+.btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(106, 17, 203, 0.4);
+    color: white;
+}
+
+.btn:hover::before {
+    opacity: 1;
+}
+
+.btn i {
+    margin-left: 10px;
+    transition: var(--transition);
+}
+
+.btn:hover i {
+    transform: translateX(5px);
+}
+
+/* Список возможностей */
+.feature-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.feature-item {
+    background-color: white;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border-left: 5px solid var(--accent-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-item:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+}
+
+.feature-item::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(106, 17, 203, 0.05), rgba(0, 198, 251, 0.05));
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.feature-item:hover::after {
+    opacity: 1;
+}
+
+.feature-item h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+}
+
+.feature-item h3 i {
+    margin-right: 12px;
+    color: var(--accent-color);
+    font-size: 1.4em;
+}
+
+.feature-item p {
+    margin-bottom: 0;
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Шаги с анимацией */
+.steps {
+    counter-reset: step-counter;
+    margin-top: 40px;
+}
+
+.step {
+    position: relative;
+    padding-left: 80px;
+    margin-bottom: 35px;
+    transition: var(--transition);
+}
+
+.step:hover {
+    transform: translateX(5px);
+}
+
+.step::before {
+    counter-increment: step-counter;
+    content: counter(step-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.4rem;
+    box-shadow: 0 8px 20px rgba(106, 17, 203, 0.3);
+    transition: var(--transition);
+}
+
+.step:hover::before {
+    transform: scale(1.1);
+}
+
+.step h3 {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+}
+
+.step p {
+    margin-bottom: 0;
+    font-size: 1.05rem;
+}
+
+/* Формы и элементы ввода */
+.form-container {
+    display: grid; /* Включаем Grid */
+    grid-template-columns: repeat(3, 1fr); /* Создаем три равные колонки */
+    gap: 20px; /* Отступ между элементами */
+}
+
+input, select, textarea {
+    padding: 14px 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: var(--transition);
+    background-color: #f9f9f9;
+    width: 80%; /* Элементы занимают всю ширину ячейки */
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(0, 198, 251, 0.2);
+    background-color: white;
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .sidebar {
+        width: 260px;
+    }
+    .main-content {
+        margin-left: 260px;
+        padding: 40px;
+    }
+}
+
+@media (max-width: 992px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 25px;
+    }
+    .card {
+        padding: 30px;
+    }
+    h1 {
+        font-size: 2rem;
+    }
+    h2 {
+        font-size: 1.6rem;
+    }
+    .feature-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-content {
+        padding: 20px;
+    }
+    .card {
+        padding: 25px;
+    }
+    h1 {
+        font-size: 1.8rem;
+    }
+    .btn {
+        width: 100%;
+    }
+}
+
+/* Анимация загрузки */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card, .feature-item, .step {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Дополнительные эффекты */
+::selection {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* Кастомный скроллбар */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--primary-color), var(--accent-color));
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-hover);
+}

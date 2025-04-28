@@ -27,50 +27,58 @@
             <form method="post">
                 {% csrf_token %}
 
+                    <label>Загрузить</label>
+                    <select name="calculation_id" class="form-control">
+                        {% for calc in saved_calculations %}
+                        <option value="{{ calc.id }}">{{ calc.name }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <button type="submit" name="load" class="btn">Загрузить</button>
                 <div class="form-container">
                     <div class="form-group">
                         <label>Ожидаемая адиабатная температура (T_ad, К)</label>
-                        <input type="number" min = "0" step="0.01" name="T_ad" value="{{ form_data.T_ad }}" required>
+                        <input type="number" min = "0" step="0.01" name="T_ad" value="{{ form_data.T_ad }}" >
                     </div>
 
                     <div class="form-group">
                         <label>Средняя тепловая эффективность поверхностей (psi_ZAG)</label>
-                        <input type="number" min = "0" max = "0.999" step="0.001" name="psi_ZAG" value="{{ form_data.psi_ZAG }}" required>
+                        <input type="number" min = "0" max = "0.999" step="0.001" name="psi_ZAG" value="{{ form_data.psi_ZAG }}" >
                     </div>
 
                     <div class="form-group">
                         <label>Ширина топки (a_T, м)</label>
-                        <input type="number" min = "0" step="0.01" name="a_T" value="{{ form_data.a_T }}" required>
+                        <input type="number" min = "0" step="0.01" name="a_T" value="{{ form_data.a_T }}" >
                     </div>
 
                     <div class="form-group">
                         <label>Глубина топки (b_T, м)</label>
-                        <input type="number" min = "0" step="0.01" name="b_T" value="{{ form_data.b_T }}" required>
+                        <input type="number" min = "0" step="0.01" name="b_T" value="{{ form_data.b_T }}" >
                     </div>
 
                     <div class="form-group">
                         <label>Высота зоны активного горения (h_ZAG, м)</label>
-                        <input type="number" min = "0" step="0.01" name="h_ZAG" value="{{ form_data.h_ZAG }}" required>
+                        <input type="number" min = "0" step="0.01" name="h_ZAG" value="{{ form_data.h_ZAG }}" >
                     </div>
 
                     <div class="form-group">
                         <label>Расход топлива (Bp, м³/с)</label>
-                        <input type="number" min = "0" step="0.01" name="Bp" value="{{ form_data.Bp }}" required>
+                        <input type="number" min = "0" step="0.01" name="Bp" value="{{ form_data.Bp }}" >
                     </div>
 
                     <div class="form-group">
                         <label>Объем продуктов сгорания (Vr_Rg, м³/м³)</label>
-                        <input type="number" min = "0" step="0.01" name="Vr_Rg" value="{{ form_data.Vr_Rg }}" required>
+                        <input type="number" min = "0" step="0.01" name="Vr_Rg" value="{{ form_data.Vr_Rg }}" >
                     </div>
 
                     <div class="form-group">
                         <label>Коэффициент заполнения камеры (xi)</label>
-                        <input type="number" min = "0" step="0.01" name="xi" value="{{ form_data.xi }}" required>
+                        <input type="number" min = "0" step="0.01" name="xi" value="{{ form_data.xi }}" >
                     </div>
 
                     <div class="form-group">
                         <label>Тепловая нагрузка зоны активного горения (q_ZAG, Вт/м²)</label>
-                        <input type="number" min = "0" step="0.001" name="q_ZAG" value="{{ form_data.q_ZAG }}" required>
+                        <input type="number" min = "0" step="0.001" name="q_ZAG" value="{{ form_data.q_ZAG }}" >
                     </div>
 
                     <div class="form-group">
@@ -84,47 +92,47 @@
 
                     <div class="form-group">
                         <label>Коэффициент конструкции горелки (Kg)</label>
-                        <input type="number" min = "0" step="0.01" name="Kg" value="{{ form_data.Kg }}" required>
+                        <input type="number" min = "0" step="0.01" name="Kg" value="{{ form_data.Kg }}" >
                     </div>
 
                     <div class="form-group">
                         <label>Коэффициент избытка воздуха в горелках (alpha_ZAG)</label>
-                        <input type="number" min = "0" step="0.01" name="alpha_ZAG" value="{{ form_data.alpha_ZAG }}" required>
+                        <input type="number" min = "0" step="0.01" name="alpha_ZAG" value="{{ form_data.alpha_ZAG }}" >
                     </div>
 
                     <div class="form-group">
                         <label>Содержание азота (Nr, доля)</label>
-                        <input type="number" min = "0" step="0.0001" name="Nr" value="{{ form_data.Nr }}" required>
+                        <input type="number" min = "0" step="0.0001" name="Nr" value="{{ form_data.Nr }}" >
                     </div>
 
                     <div class="form-group">
                         <label>Объем продуктов сгорания (Vr, м³/м³)</label>
-                        <input type="number" min = "0" step="0.01" name="Vr" value="{{ form_data.Vr }}" required>
+                        <input type="number" min = "0" step="0.01" name="Vr" value="{{ form_data.Vr }}" >
                     </div>
 
                     <div class="form-group">
                         <label>Теоретический объем сухих газов (Vsg0, м³/м³)</label>
-                        <input type="number" min = "0" step="0.01" name="Vsg0" value="{{ form_data.Vsg0 }}" required>
+                        <input type="number" min = "0" step="0.01" name="Vsg0" value="{{ form_data.Vsg0 }}" >
                     </div>
 
                     <div class="form-group">
                         <label>Теоретический объем воздуха (Vv0, м³/м³)</label>
-                        <input type="number" min = "0" step="0.01" name="Vv0" value="{{ form_data.Vv0 }}" required>
+                        <input type="number" min = "0" step="0.01" name="Vv0" value="{{ form_data.Vv0 }}" >
                     </div>
 
                     <div class="form-group">
                         <label>Доля газов рециркуляции (R)</label>
-                        <input type="number" min = "0" step="0.01" name="R" value="{{ form_data.R }}" required>
+                        <input type="number" min = "0" step="0.01" name="R" value="{{ form_data.R }}" >
                     </div>
 
                     <div class="form-group">
                         <label>Объем дымовых газов (Vg, м³/м³)</label>
-                        <input type="number" min = "0" step="0.01" name="Vg" value="{{ form_data.Vg }}" required>
+                        <input type="number" min = "0" step="0.01" name="Vg" value="{{ form_data.Vg }}" >
                     </div>
 
                     <div class="form-group">
                         <label>Коэффициент пересчета (Kp)</label>
-                        <input type="number" min = "0" step="0.01" name="Kp" value="{{ form_data.Kp }}" required>
+                        <input type="number" min = "0" step="0.01" name="Kp" value="{{ form_data.Kp }}" >
                     </div>
                 </div>
 
@@ -136,6 +144,8 @@
                     <p>Удельные выбросы (г/МДж): {{form_data.concentration}}</p>
                     <p>Концентрация NOx (г/м3): {{ form_data.standard_concentration }}</p>
                     <p>Мощность выброса (г/с): {{ form_data.emission_power }}</p>
+                    <input type="text" name="name" value="{{ form_data.name}}" >
+                    <button type="submit" name="save" class="btn">Сохранить</button>
                 </div>
                 {% endif %}
                 {% if form_data.flag == 0%}
@@ -143,6 +153,8 @@
                     <h2>Проверьте корректность введенных значений</h2>
                 </div>
                 {% endif %}
+
+                <button type="submit" name = 'download' class = 'btn'>Скачать</button>
             </form>
         </div>
     </div>

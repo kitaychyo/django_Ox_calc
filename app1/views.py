@@ -1,83 +1,89 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from . import calculate as calc
+from .models import SOx_save, NOx_save, NOx_fuel_save
+
+
+def handle_save(model, data):
+    """Сохраняет расчет в модель."""
+    return model.objects.create(**{k: v for k, v in data.items() if k != 'itog'}, itog=data.get('itog', 0))
+
+
+def handle_download(data, filename, title):
+    """Создает текстовый файл для скачивания."""
+    content = f"=== {title} ===\n\n" + "\n".join(f"{k}: {v}" for k, v in data.items()) + "\n\n==============\n"
+    response = HttpResponse(content_type='text/plain', headers={'Content-Disposition': f'attachment; filename="{filename}"'})
+    response.write(content.encode('utf-8'))
+    return response
+
+
+def handle_load(model, calc_id):
+    """Загружает расчет из модели."""
+    calc = model.objects.get(id=calc_id)
+    return {field: getattr(calc, field) for field in [f.name for f in model._meta.fields] if field != 'id'}
 
 
 def NOx(request):
-    coal_params = {}
+    form_data, saved_calculations = {}, NOx_save.objects.all().order_by('-created_at')
+    params = ['Wr', 'Ar', 'Vr', 'Nd', 'alpha_g', 'alpha_1', 'R', 'T_zag', 'w2_w1', 'delta_alpha_T', 'Vr0', 'Vv0', 'V_H2O0', 'Qi_r', 'Vg', 'Bp', 'Kp', 'delta']
+    str_params = ['burner_type', 'extra_fuel', 'name']
+
     if request.method == 'POST':
-        coal_params = {
-            'Wr': float(request.POST.get('Wr')),
-            'Ar': float(request.POST.get('Ar')),
-            'Vr': float(request.POST.get('Vr')),
-            'Nd': float(request.POST.get('Nd')),
-            'alpha_g': float(request.POST.get('alpha_g')),
-            'alpha_1': float(request.POST.get('alpha_1')),
-            'R': float(request.POST.get('R')),
-            'T_zag': float(request.POST.get('T_zag')),
-            'w2_w1': float(request.POST.get('w2_w1')),
-            'delta_alpha_T': float(request.POST.get('delta_alpha_T')),
-            'Vr0': float(request.POST.get('Vr0')),
-            'Vv0': float(request.POST.get('Vv0')),
-            'V_H2O0': float(request.POST.get('V_H2O0')),
-            'Qi_r': float(request.POST.get('Qi_r')),
-            'Vg': float(request.POST.get('Vg')),
-            'Bp': float(request.POST.get('Bp')),
-            'Kp': float(request.POST.get('Kp')),
-            'burner_type': request.POST.get('burner_type'),
-            'extra_fuel': request.POST.get('extra_fuel'),
-            'delta': float(request.POST.get('delta'))
-        }
-        itog = calc.calculate_nox_coal_boiler(coal_params)
+        if 'load' not in request.POST:
+            form_data = {k: float(request.POST.get(k)) for k in params}
+            form_data.update({k: request.POST.get(k, '') for k in str_params})
+            form_data.update(calc.calculate_nox_coal_boiler(form_data))
 
-        coal_params = {**coal_params, **itog}
+            if 'save' in request.POST:
+                handle_save(NOx_save, form_data)
+            elif 'download' in request.POST:
+                return handle_download(form_data, "NOx_calculation.txt", "Расчет выбросов NOx (угольный котел)")
+        else:
+            form_data = handle_load(NOx_save, request.POST.get('calculation_id'))
 
-    return render(request, 'NOx.html', {'form_data': coal_params})
+    return render(request, 'NOx.html', {'form_data': form_data, 'saved_calculations': saved_calculations})
+
 
 def NOx_fuel(request):
-    coal_params = {}
-    if request.method == 'POST':
-        coal_params = {
-            'T_ad': float(request.POST.get('T_ad')),  # Ожидаемая адиабатная температура, К
-            'psi_ZAG': float(request.POST.get('psi_ZAG')),  # Коэффициент отражения теплового потока (1 - тепловая эффективность)
-            'a_T': float(request.POST.get('a_T')),  # Ширина топки в свету, м
-            'b_T': float(request.POST.get('b_T')),  # Глубина топки в свету, м
-            'h_ZAG': float(request.POST.get('h_ZAG')),  # Высота зоны активного горения, м
-            'Bp': float(request.POST.get('Bp')),  # Расход топлива, м3/с
-            'Vr_Rg': float(request.POST.get('Vr_Rg')),  # Объем продуктов сгорания, м3/м3
-            'xi': float(request.POST.get('xi')),  # Коэффициент заполнения топочной камеры
-            'q_ZAG': float(request.POST.get('q_ZAG')),  # Тепловая нагрузка зоны активного горения, перевели МВт/м2 -> Вт/м2
-            'fuel_type': request.POST.get('fuel_type'),  # Тип топлива: газ
-            'Kg': float(request.POST.get('Kg')),  # Коэффициент конструкции горелочного устройства
-            'alpha_ZAG': float(request.POST.get('alpha_ZAG')),  # Коэффициент избытка воздуха в горелках
-            'Nr': float(request.POST.get('Nr')),  # Содержание азота, перевели в долю
-            'Vr': float(request.POST.get('Vr')),  # Объем продуктов сгорания, м3/м3
-            'Vsg0': float(request.POST.get('Vsg0')),  # Теоретический объем сухих газов, м3/м3
-            'Vv0': float(request.POST.get('Vv0')),  # Теоретический объем воздуха для полного сжигания топлива, м3/м3
-            'R': float(request.POST.get('R')),  # Доля газов рециркуляции
-            'Vg': float(request.POST.get('Vg')),  # Объем дымовых газов, м3/м3
-            'Kp': float(request.POST.get('Kp'))  # Коэффициент конструкции горелочного устройства (как поправочный)
-        }
+    form_data, saved_calculations = {}, NOx_fuel_save.objects.all().order_by('-created_at')
+    params = ['T_ad', 'psi_ZAG', 'a_T', 'b_T', 'h_ZAG', 'Bp', 'Vr_Rg', 'xi', 'q_ZAG', 'Kg', 'alpha_ZAG', 'Nr', 'Vr', 'Vsg0', 'Vv0', 'R', 'Vg', 'Kp']
+    str_params = ['fuel_type', 'name']
 
-        itog = calc.calculate_nox_gas_oil_boiler(coal_params)
-        coal_params = {**coal_params, **itog}
-        print(itog)
-    return render(request, 'NOx_fuel.html', {'form_data': coal_params})
+    if request.method == 'POST':
+        if 'load' not in request.POST:
+            form_data = {k: float(request.POST.get(k)) for k in params}
+            form_data.update({k: request.POST.get(k, '') for k in str_params})
+            form_data.update(calc.calculate_nox_gas_oil_boiler(form_data))
+
+            if 'save' in request.POST:
+                handle_save(NOx_fuel_save, form_data)
+            elif 'download' in request.POST:
+                return handle_download(form_data, "NOx_fuel_calculation.txt", "Расчет выбросов NOx (газ/мазут)")
+        else:
+            form_data = handle_load(NOx_fuel_save, request.POST.get('calculation_id'))
+
+    return render(request, 'NOx_fuel.html', {'form_data': form_data, 'saved_calculations': saved_calculations})
 
 
 def SOx(request):
-    form_data = {}
+    form_data, saved_calculations = {}, SOx_save.objects.all().order_by('-created_at')
+    params = ['B', 'S_r', 'n1_SO2', 'n2_SO2']
+
     if request.method == 'POST':
-        form_data = {
-            'B': float(request.POST.get('B', '')),
-            'S_r': float(request.POST.get('S_r', '')),
-            'n1_SO2': float(request.POST.get('n1_SO2', '')),
-            'n2_SO2':float(request.POST.get('n2_SO2', '')),
-            'itog': 0
-        }
-        form_data['itog'] = 0.02*form_data['B']*form_data['S_r']*(1-form_data['n1_SO2'])*(1-form_data['n2_SO2'])*1000
-    return render(request, 'SOx.html', {'form_data':form_data})
+        if 'load' not in request.POST:
+            form_data = {k: float(request.POST.get(k, 0)) for k in params}
+            form_data['name'] = request.POST.get('name', '')
+            form_data['itog'] = 0.02 * form_data['B'] * form_data['S_r'] * (1 - form_data['n1_SO2']) * (1 - form_data['n2_SO2']) * 1000
+
+            if 'save' in request.POST:
+                handle_save(SOx_save, form_data)
+            elif 'download' in request.POST:
+                return handle_download(form_data, "SOx_calculation.txt", "Расчет выбросов SOx")
+        else:
+            form_data = handle_load(SOx_save, request.POST.get('calculation_id'))
+
+    return render(request, 'SOx.html', {'form_data': form_data, 'saved_calculations': saved_calculations})
+
 
 def home(request):
     return render(request, 'home.html')
-
