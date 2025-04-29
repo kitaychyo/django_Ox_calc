@@ -43,7 +43,9 @@ class NOx_save(models.Model):
     burner_type = models.CharField(max_length=50)
     extra_fuel = models.CharField(max_length=50)
     delta = models.FloatField()
-    itog = models.FloatField()
+    specific_emissions = models.FloatField()
+    concentration = models.FloatField()
+    emission_power = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -70,7 +72,9 @@ class NOx_fuel_save(models.Model):
     R = models.FloatField()  # Доля рециркуляции
     Vg = models.FloatField()  # Объем дымовых газов, м3/м3
     Kp = models.FloatField()  # Поправочный коэффициент
-    itog = models.FloatField()  # Итоговый выброс, г/с
+    concentration = models.FloatField()
+    standard_concentration = models.FloatField()
+    emission_power = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

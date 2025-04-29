@@ -62,7 +62,9 @@ def NOx(request):
                     burner_type=form_data['burner_type'],
                     extra_fuel=form_data['extra_fuel'],
                     delta=form_data['delta'],
-                    itog=form_data.get('itog', 0)  # Предполагается, что itog возвращает значение
+                    specific_emissions=form_data.get('specific_emissions', 0),
+                    concentration=form_data.get('concentration', 0),
+                    emission_power=form_data.get('emission_power', 0)
                 )
                 article.save()
 
@@ -92,7 +94,9 @@ def NOx(request):
                     f"Тип горелки: {form_data['burner_type']}\n"
                     f"Дополнительное топливо: {form_data['extra_fuel']}\n"
                     f"delta: {form_data['delta']}\n"
-                    f"Итоговый выброс (г/с): {form_data.get('itog', 0):.2f}\n"
+                    f"specific_emissions (г/с): {form_data.get('specific_emissions', 0):.2f}\n"
+                    f"concentration (г/с): {form_data.get('concentration', 0):.2f}\n"
+                    f"emission_power (г/с): {form_data.get('emission_power', 0):.2f}\n"
                     "\n"
                     "=====================================\n"
                 )
@@ -130,7 +134,10 @@ def NOx(request):
                     'burner_type': selected_calc.burner_type,
                     'extra_fuel': selected_calc.extra_fuel,
                     'delta': selected_calc.delta,
-                    'itog': selected_calc.itog
+                    'specific_emissions': selected_calc.specific_emissions,
+                    'concentration': selected_calc.concentration,
+                    'emission_power': selected_calc.emission_power,
+                    'flag': 1
                 }
 
     return render(request, 'NOx.html', {'form_data': form_data, 'saved_calculations': saved_calculations})
@@ -190,7 +197,9 @@ def NOx_fuel(request):
                     R=form_data['R'],
                     Vg=form_data['Vg'],
                     Kp=form_data['Kp'],
-                    itog=form_data.get('itog', 0)  # Предполагается, что itog возвращает значение
+                    concentration=form_data.get('concentration', 0),
+                    standard_concentration=form_data.get('standard_concentration', 0),
+                    emission_power=form_data.get('emission_power', 0)
                 )
                 article.save()
 
@@ -219,7 +228,9 @@ def NOx_fuel(request):
                     f"R: {form_data['R']}\n"
                     f"Vg: {form_data['Vg']}\n"
                     f"Kp: {form_data['Kp']}\n"
-                    f"Итоговый выброс (г/с): {form_data.get('itog', 0):.2f}\n"
+                    f"concentration (г/с): {form_data.get('concentration', 0):.2f}\n"
+                    f"standard_concentration: {form_data.get(' standard_concentration', 0):.2f}\n"
+                    f"emission_power (г/с): {form_data.get('emission_power', 0):.2f}\n"
                     "\n"
                     "===================================\n"
                 )
@@ -256,7 +267,10 @@ def NOx_fuel(request):
                     'R': selected_calc.R,
                     'Vg': selected_calc.Vg,
                     'Kp': selected_calc.Kp,
-                    'itog': selected_calc.itog
+                    'concentration': selected_calc.concentration,
+                    'standard_concentration': selected_calc.standard_concentration,
+                    'emission_power': selected_calc.emission_power,
+                    'flag':1
                 }
 
     return render(request, 'NOx_fuel.html', {'form_data': form_data, 'saved_calculations': saved_calculations})
@@ -307,6 +321,9 @@ def SOx(request):
                 )
                 response.write(content.encode('utf-8'))
                 return response
+            elif 'upload' in request.POST:
+                print("хуй")
+
 
         elif 'load' in request.POST:
             calculation_id = request.POST.get('calculation_id')
