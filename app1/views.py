@@ -66,7 +66,8 @@ def NOx(request):
             form_data.update(itog)
 
             if 'save' in request.POST:
-                save_to_model(NOx_save, form_data, NOX_FIELDS | {'specific_emissions', 'concentration', 'emission_power'})
+                all_fields = set(NOX_FIELDS.keys()) | {'specific_emissions', 'concentration', 'emission_power'}
+                save_to_model(NOx_save, form_data, all_fields)
             elif 'download' in request.POST:
                 content = create_text_content("Расчет выбросов NOx (угольный котел)", form_data)
                 return HttpResponse(
