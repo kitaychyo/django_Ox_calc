@@ -97,7 +97,8 @@ def NOx_fuel(request):
             form_data.update(itog)
 
             if 'save' in request.POST:
-                save_to_model(NOx_fuel_save, form_data, NOX_FUEL_FIELDS | {'concentration', 'standard_concentration', 'emission_power'})
+                all_fields = set(NOX_FUEL_FIELDS.keys()) | {'concentration', 'standard_concentration', 'emission_power'}
+                save_to_model(NOx_fuel_save, form_data, all_fields)
             elif 'download' in request.POST:
                 content = create_text_content("Расчет выбросов NOx (газ/мазут)", form_data)
                 return HttpResponse(
@@ -124,12 +125,13 @@ def SOx(request):
         else:
             form_data = extract_form_data(request, SOX_FIELDS)
             try:
-                form_data['itog'] = 0.02 * form_data['B'] * form_data['S_r'] * (1 - form_data['n1_SO2']) * (1 - form_data['n2_SO2']) * 1000
+                form_data['itog'] = 0.02 * form_data['B'] * form_data['S_r']/100 * (1 - form_data['n1_SO2']/100) * (1 - form_data['n2_SO2']/100) * 1000
             except (ValueError, TypeError):
                 form_data['error'] = "Invalid input data."
 
             if 'save' in request.POST:
-                save_to_model(SOx_save, form_data, SOX_FIELDS | {'itog'})
+                all_fields = set(SOX_FIELDS.keys()) | {'itog'}
+                save_to_model(SOx_save, form_data, all_fields)
             elif 'download' in request.POST:
                 content = create_text_content("Расчет выбросов SOx", form_data)
                 return HttpResponse(
