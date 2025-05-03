@@ -40,7 +40,15 @@
                 </div>
             </div>
 
-            <a href="{% url 'NOx' %}" class="btn">Начать расчёт <i>→</i></a>
+            {% if error %}
+            <p style="color: red;">{{ error }}</p>
+            {% endif %}
+            <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="file">Выберите файл:</label>
+        <input type="file" id="file" name="file" accept=".txt" required>
+        <button type="submit" class = "btn">Загрузить</button>
+
         </div>
     </div>
 </body>

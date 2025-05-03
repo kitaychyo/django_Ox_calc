@@ -22,56 +22,64 @@
     </div>
 
     <div class="main-content">
-
         <div class="card">
             <h1>Расчет выбросов оксидов серы</h1>
-            <form method="POST">
+
+            <!-- Отображение ошибок -->
+            {% if form_data.error %}
+                <p style="color: red;">{{ form_data.error }}</p>
+            {% endif %}
+
+            <form method="POST" action="{% url 'SOx' %}">
                 {% csrf_token %}
-                    <label>Загрузить</label>
+                <!-- Сохраненные записи -->
+                <div class="form-group">
+                    <label>Сохраненные записи</label>
                     <select name="calculation_id" class="form-control">
+                        <option value="">Выберите запись</option>
                         {% for calc in saved_calculations %}
-                        <option value="{{ calc.id }}">{{ calc.name }}</option>
+                            <option value="{{ calc.id }}">{{ calc.name }}</option>
                         {% endfor %}
                     </select>
+                    <button type="submit" name="load" class="btn">Загрузить сохраненную запись</button>
+                </div>
 
-                    <button type="submit" name="load" class="btn">Загрузить</button>
-
+                <!-- Поля формы -->
                 <div class="form-container">
                     <div class="form-group">
                         <label>Расход топлива (B, кг/с)</label>
-                        <input type="number" min = "0" step="0.01" name="B" value="{{ form_data.B }}">
+                        <input type="number" min="0" step="0.01" name="B" value="{{ form_data.B|default:0 }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Содержание серы (S_r, %)</label>
-                        <input type="number" min = "0" step="0.01" name="S_r" value="{{ form_data.S_r }}" >
+                        <input type="number" min="0" step="0.01" name="S_r" value="{{ form_data.S_r|default:0 }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Доля оксидов серы, связываемых летучей золой (n1_SO2)</label>
-                        <input type="number" min = "0" step="0.01" name="n1_SO2" value="{{ form_data.n1_SO2 }}">
+                        <input type="number" min="0" step="0.01" name="n1_SO2" value="{{ form_data.n1_SO2|default:0 }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Доля оксидов серы, улавливаемых в золоуловителе (n2_SO2)</label>
-                        <input type="number" min = "0" step="0.01" name="n2_SO2" value="{{ form_data.n2_SO2 }}">
+                        <input type="number" min="0" step="0.01" name="n2_SO2" value="{{ form_data.n2_SO2|default:0 }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Название расчета</label>
+                        <input type="text" name="name" value="{{ form_data.name|default_if_none:'тест' }}">
                     </div>
                 </div>
 
+                <!-- Кнопка расчета -->
                 <button type="submit" name="calculate" class="btn">Рассчитать выбросы оксида серы</button>
 
+                <!-- Результаты -->
                 {% if form_data.itog %}
-                <div class="results">
-                    <h2>Результаты расчёта:</h2>
-                    <p>Выбросы оксида серы (г/с): {{form_data.itog}}</p>
-                    <div class="form-group">
-                    <input type="text" name="name" value="{{ form_data.name}}" >
-                    <button type="submit" name="save" class="btn">Сохранить</button>
-                </div>
+                    <div class="results">
+                        <h2>Результаты расчёта:</h2>
+                        <p>Выбросы оксида серы (г/с): {{ form_data.itog }}</p>
+                        <button type="submit" name="save" class="btn">Сохранить</button>
+                        <button type="submit" name="download" class="btn">Скачать</button>
+                    </div>
                 {% endif %}
-
-                <button type="submit" name = 'download' class = 'btn'>Скачать</button>
-
             </form>
         </div>
     </div>

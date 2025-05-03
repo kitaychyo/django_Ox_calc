@@ -25,146 +25,134 @@
         <div class="card">
             <h1>Расчет выбросов оксидов азота (уголь)</h1>
 
-            <form method="post">
-                {% csrf_token %}
+            <!-- Отображение ошибок -->
+            {% if form_data.error %}
+                <p style="color: red;">{{ form_data.error }}</p>
+            {% endif %}
 
-                    <label>Загрузить</label>
+            <form method="POST" action="{% url 'NOx' %}">
+                {% csrf_token %}
+                <!-- Сохраненные записи -->
+                <div class="form-group">
+                    <label>Сохраненные записи</label>
                     <select name="calculation_id" class="form-control">
+                        <option value="">Выберите запись</option>
                         {% for calc in saved_calculations %}
-                        <option value="{{ calc.id }}">{{ calc.name }}</option>
+                            <option value="{{ calc.id }}">{{ calc.name }}</option>
                         {% endfor %}
                     </select>
+                    <button type="submit" name="load" class="btn">Загрузить сохраненную запись</button>
+                </div>
 
-                    <button type="submit" name="load" class="btn">Загрузить</button>
+                <!-- Поля формы -->
                 <div class="form-container">
                     <div class="form-group">
                         <label>Влажность (Wr, %)</label>
-                        <input type="number" min = "0" step="0.01" name="Wr" value="{{ form_data.Wr|default_if_none:'' }}" >
+                        <input type="number" min="0" step="0.01" name="Wr" value="{{ form_data.Wr|default_if_none:'' }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Зольность (Ar, %)</label>
-                        <input type="number" min = "0" step="0.01" name="Ar" value="{{ form_data.Ar|default_if_none:'' }}" >
+                        <input type="number" min="0" step="0.01" name="Ar" value="{{ form_data.Ar|default_if_none:'' }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Выход летучих (Vr, %)</label>
-                        <input type="number" min = "0" step="0.01" name="Vr" value="{{ form_data.Vr|default_if_none:'' }}" >
+                        <input type="number" min="0" step="0.01" name="Vr" value="{{ form_data.Vr|default_if_none:'' }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Азот (Nd, %)</label>
-                        <input type="number" min = "0" step="0.01" name="Nd" value="{{ form_data.Nd|default_if_none:'' }}" >
+                        <input type="number" min="0" step="0.01" name="Nd" value="{{ form_data.Nd|default_if_none:'' }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Коэффициент избытка воздуха (alpha_g)</label>
-                        <input type="number" min = "0" step="0.01" name="alpha_g" value="{{ form_data.alpha_g|default_if_none:'' }}" >
+                        <input type="number" min="0" step="0.01" name="alpha_g" value="{{ form_data.alpha_g|default_if_none:'' }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Доля первичного воздуха (alpha_1)</label>
-                        <input type="number" min = "0" step="0.01" name="alpha_1" value="{{ form_data.alpha_1|default_if_none:'' }}" >
+                        <input type="number" min="0" step="0.01" name="alpha_1" value="{{ form_data.alpha_1|default_if_none:'' }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Рециркуляция (R, %)</label>
-                        <input type="number" min = "0" step="0.01" name="R" value="{{ form_data.R|default_if_none:'' }}" >
+                        <input type="number" min="0" step="0.01" name="R" value="{{ form_data.R|default_if_none:'' }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Температура из ЗАГ (T_zag, К)</label>
-                        <input type="number" min = "0" step="0.01" name="T_zag" value="{{ form_data.T_zag|default_if_none:'' }}" >
+                        <input type="number" min="0" step="0.01" name="T_zag" value="{{ form_data.T_zag|default_if_none:'' }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Соотношение скоростей (w2_w1)</label>
-                        <input type="number" min = "0" step="0.01" name="w2_w1" value="{{ form_data.w2_w1|default_if_none:'' }}" >
+                        <input type="number" min="0" step="0.01" name="w2_w1" value="{{ form_data.w2_w1|default_if_none:'' }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Присосы в топку (delta_alpha_T, %)</label>
-                        <input type="number" min = "0" step="0.01" name="delta_alpha_T" value="{{ form_data.delta_alpha_T|default_if_none:'' }}" >
+                        <input type="number" min="0" step="0.01" name="delta_alpha_T" value="{{ form_data.delta_alpha_T|default_if_none:'' }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Теоретический объем газов (Vr0, м3/кг)</label>
-                        <input type="number" min = "0" step="0.01" name="Vr0" value="{{ form_data.Vr0|default_if_none:'' }}" >
+                        <input type="number" min="0" step="0.01" name="Vr0" value="{{ form_data.Vr0|default_if_none:'' }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Теоретический объем воздуха (Vv0, м3/кг)</label>
-                        <input type="number" min = "0" step="0.01" name="Vv0" value="{{ form_data.Vv0|default_if_none:'' }}" >
+                        <input type="number" min="0" step="0.01" name="Vv0" value="{{ form_data.Vv0|default_if_none:'' }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Объем водяных паров (V_H2O0, м3/кг)</label>
-                        <input type="number" min = "0" step="0.01" name="V_H2O0" value="{{ form_data.V_H2O0|default_if_none:'' }}" >
+                        <input type="number" min="0" step="0.01" name="V_H2O0" value="{{ form_data.V_H2O0|default_if_none:'' }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Теплота сгорания (Qi_r, МДж/кг)</label>
-                        <input type="number" min = "0" step="0.01" name="Qi_r" value="{{ form_data.Qi_r|default_if_none:'' }}" >
+                        <input type="number" min="0" step="0.01" name="Qi_r" value="{{ form_data.Qi_r|default_if_none:'' }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Объем дымовых газов (Vg, м3/кг)</label>
-                        <input type="number" min = "0" step="0.01" name="Vg" value="{{ form_data.Vg|default_if_none:'' }}" >
+                        <input type="number" min="0" step="0.01" name="Vg" value="{{ form_data.Vg|default_if_none:'' }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Расход топлива (Bp, м3/с)</label>
-                        <input type="number" min = "0" step="0.01" name="Bp" value="{{ form_data.Bp|default_if_none:'' }}" >
+                        <input type="number" min="0" step="0.01" name="Bp" value="{{ form_data.Bp|default_if_none:'' }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Коэффициент пересчета (Kp)</label>
-                        <input type="number" min = "0" step="0.00001" name="Kp" value="{{ form_data.Kp|default_if_none:'' }}" >
+                        <input type="number" min="0" step="0.00001" name="Kp" value="{{ form_data.Kp|default_if_none:'' }}" required>
                     </div>
-
                     <div class="form-group">
                         <label>Тип горелок</label>
-                        <select name="burner_type" >
+                        <select name="burner_type" required>
                             <option value="вихревые" {% if form_data.burner_type == "вихревые" %}selected{% endif %}>Вихревые</option>
                             <option value="прямоточные" {% if form_data.burner_type == "прямоточные" %}selected{% endif %}>Прямоточные</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label>Дополнительное топливо</label>
-                        <select name="extra_fuel" >
+                        <select name="extra_fuel" required>
                             <option value="нет доп. топлива" {% if form_data.extra_fuel == "нет доп. топлива" %}selected{% endif %}>Без дополнительного топлива</option>
                             <option value="газ" {% if form_data.extra_fuel == "газ" %}selected{% endif %}>Сжигание с газом</option>
-                            <option value="мазут" {% if form_data.extra_fuel == "мазут" %}selected{% endif %}>Сжигание с мазутом</option>
+                            <option value="мазут" {% if form_data.extra_fuel == "мазут" %}selected{% endif %}>С Wжигание с мазутом</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label>Доля газа или мазута по теплу</label>
-                        <input type="number" min = "0" step="0.01" name="delta" value="{{ form_data.delta }}" >
+                        <input type="number" min="0" step="0.01" name="delta" value="{{ form_data.delta|default_if_none:'' }}" required>
                     </div>
-
+                    <div class="form-group">
+                        <label>Название расчета</label>
+                        <input type="text" name="name" value="{{ form_data.name|default_if_none:'' }}">
+                    </div>
                 </div>
 
-                <button type="submit" class="btn">Рассчитать выбросы оксидов азота</button>
+                <!-- Кнопка расчета -->
+                <button type="submit" name="calculate" class="btn">Рассчитать выбросы оксидов азота</button>
 
-                {% if form_data.flag == 1 %}
-                <div class="results">
-                    <h2>Результаты расчёта:</h2>
-                    <p>Удельные выбросы (г/МДж): {{ form_data.specific_emissions }}</p>
-                    <p>Концентрация (г/м3): {{ form_data.concentration }}</p>
-                    <p>Мощность выброса (г/с): {{ form_data.emission_power }}</p>
-                    <input type="text" name="name" value="{{ form_data.name}}" >
-                    <button type="submit" name="save" class="btn">Сохранить</button>
-                </div>
+                <!-- Результаты -->
+                {% if form_data.specific_emissions %}
+                    <div class="results">
+                        <h2>Результаты расчёта:</h2>
+                        <p>Удельные выбросы (г/МДж): {{ form_data.specific_emissions }}</p>
+                        <p>Концентрация (г/м3): {{ form_data.concentration }}</p>
+                        <p>Мощность выброса (г/с): {{ form_data.emission_power }}</p>
+                        <button type="submit" name="save" class="btn">Сохранить</button>
+                        <button type="submit" name="download" class="btn">Скачать</button>
+                    </div>
                 {% endif %}
-                {% if form_data.flag == 0%}
-                <div class="results">
-                    <h2>Проверьте корректность введенных значений</h2>
-                </div>
-                {% endif %}
-
-                <button type="submit" name = 'download' class = 'btn'>Скачать</button>
             </form>
         </div>
     </div>
