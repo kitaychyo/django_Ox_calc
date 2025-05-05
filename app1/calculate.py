@@ -173,9 +173,3 @@ params = {
 }
 
 result_fuel = calculate_nox_gas_oil_boiler(params)
-
-print(result_fuel)
-print("Результаты для пылеугольного котла:")
-print(f"Удельные выбросы: {result_fuel['standard_concentration']:.3f} г/МДж")
-print(f"Концентрация NOx: {result_fuel['concentration']:.3f} г/м3")
-print(f"Мощность выброса: {result_fuel['emission_power']:.3f} г/с")

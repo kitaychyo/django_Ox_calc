@@ -48,39 +48,39 @@
                 <div class="form-container">
                     <div class="form-group">
                         <label>Ожидаемая адиабатная температура (T_ad, К)</label>
-                        <input type="number" min="0" step="0.01" name="T_ad" value="{{ form_data.T_ad|default_if_none:'' }}" required>
+                        <input type="number" min="0" step="0.01" name="T_ad" value="{{ form_data.T_ad|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Средняя тепловая эффективность поверхностей (psi_ZAG)</label>
-                        <input type="number" min="0" max="0.999" step="0.001" name="psi_ZAG" value="{{ form_data.psi_ZAG|default_if_none:'' }}" required>
+                        <input type="number" min="0" max="0.999" step="0.001" name="psi_ZAG" value="{{ form_data.psi_ZAG|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Ширина топки (a_T, м)</label>
-                        <input type="number" min="0" step="0.01" name="a_T" value="{{ form_data.a_T|default_if_none:'' }}" required>
+                        <input type="number" min="0" step="0.01" name="a_T" value="{{ form_data.a_T|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Глубина топки (b_T, м)</label>
-                        <input type="number" min="0" step="0.01" name="b_T" value="{{ form_data.b_T|default_if_none:'' }}" required>
+                        <input type="number" min="0" step="0.01" name="b_T" value="{{ form_data.b_T|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Высота зоны активного горения (h_ZAG, м)</label>
-                        <input type="number" min="0" step="0.01" name="h_ZAG" value="{{ form_data.h_ZAG|default_if_none:'' }}" required>
+                        <input type="number" min="0" step="0.01" name="h_ZAG" value="{{ form_data.h_ZAG|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Расход топлива (Bp, м³/с)</label>
-                        <input type="number" min="0" step="0.01" name="Bp" value="{{ form_data.Bp|default_if_none:'' }}" required>
+                        <input type="number" min="0" step="0.01" name="Bp" value="{{ form_data.Bp|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Объем продуктов сгорания (Vr_Rg, м³/м³)</label>
-                        <input type="number" min="0" step="0.01" name="Vr_Rg" value="{{ form_data.Vr_Rg|default_if_none:'' }}" required>
+                        <input type="number" min="0" step="0.01" name="Vr_Rg" value="{{ form_data.Vr_Rg|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Коэффициент заполнения камеры (xi)</label>
-                        <input type="number" min="0" step="0.01" name="xi" value="{{ form_data.xi|default_if_none:'' }}" required>
+                        <input type="number" min="0" step="0.01" name="xi" value="{{ form_data.xi|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Тепловая нагрузка зоны активного горения (q_ZAG, Вт/м²)</label>
-                        <input type="number" min="0" step="0.001" name="q_ZAG" value="{{ form_data.q_ZAG|default_if_none:'' }}" required>
+                        <input type="number" min="0" step="0.001" name="q_ZAG" value="{{ form_data.q_ZAG|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Тип топлива</label>
@@ -92,43 +92,43 @@
                     </div>
                     <div class="form-group">
                         <label>Коэффициент конструкции горелки (Kg)</label>
-                        <input type="number" min="0" step="0.01" name="Kg" value="{{ form_data.Kg|default_if_none:'' }}" required>
+                        <input type="number" min="0" step="0.01" name="Kg" value="{{ form_data.Kg|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Коэффициент избытка воздуха в горелках (alpha_ZAG)</label>
-                        <input type="number" min="0" step="0.01" name="alpha_ZAG" value="{{ form_data.alpha_ZAG|default_if_none:'' }}" required>
+                        <input type="number" min="0" step="0.01" name="alpha_ZAG" value="{{ form_data.alpha_ZAG|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Содержание азота (Nr, доля)</label>
-                        <input type="number" min="0" step="0.0001" name="Nr" value="{{ form_data.Nr|default_if_none:'' }}" required>
+                        <input type="number" min="0" step="0.0001" name="Nr" value="{{ form_data.Nr|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Объем продуктов сгорания (Vr, м³/м³)</label>
-                        <input type="number" min="0" step="0.01" name="Vr" value="{{ form_data.Vr|default_if_none:'' }}" required>
+                        <input type="number" min="0" step="0.01" name="Vr" value="{{ form_data.Vr|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Теоретический объем сухих газов (Vsg0, м³/м³)</label>
-                        <input type="number" min="0" step="0.01" name="Vsg0" value="{{ form_data.Vsg0|default_if_none:'' }}" required>
+                        <input type="number" min="0" step="0.01" name="Vsg0" value="{{ form_data.Vsg0|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Теоретический объем воздуха (Vv0, м³/м³)</label>
-                        <input type="number" min="0" step="0.01" name="Vv0" value="{{ form_data.Vv0|default_if_none:'' }}" required>
+                        <input type="number" min="0" step="0.01" name="Vv0" value="{{ form_data.Vv0|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Доля газов рециркуляции (R)</label>
-                        <input type="number" min="0" step="0.01" name="R" value="{{ form_data.R|default_if_none:'' }}" required>
+                        <input type="number" min="0" step="0.01" name="R" value="{{ form_data.R|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Объем дымовых газов (Vg, м³/м³)</label>
-                        <input type="number" min="0" step="0.01" name="Vg" value="{{ form_data.Vg|default_if_none:'' }}" required>
+                        <input type="number" min="0" step="0.01" name="Vg" value="{{ form_data.Vg|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Коэффициент пересчета (Kp)</label>
-                        <input type="number" min="0" step="0.001" name="Kp" value="{{ form_data.Kp|default_if_none:'' }}" required>
+                        <input type="number" min="0" step="0.001" name="Kp" value="{{ form_data.Kp|default:0 }}" required>
                     </div>
                     <div class="form-group">
                         <label>Название расчета</label>
-                        <input type="text" name="name" value="{{ form_data.name|default_if_none:'' }}">
+                        <input type="text" name="name" value="{{ form_data.name|default:0 }}">
                     </div>
                 </div>
 

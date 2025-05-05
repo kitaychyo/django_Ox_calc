@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.urls import path
 from . import views
 from django.conf import settings
@@ -8,4 +9,4 @@ urlpatterns = [
     path('NOx/', views.NOx, name='NOx'),
     path('SOx/', views.SOx, name='SOx'),
     path('NOxFuel/', views.NOx_fuel, name='NOx_fuel'),
-]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
