@@ -75,6 +75,8 @@ def NOx(request):
                     headers={'Content-Disposition': 'attachment; filename="NOx_calculation.txt"'},
                     content=content.encode('utf-8')
                 )
+            elif 'clear' in request.POST:
+                form_data = {}
 
     return render(request, 'NOx.html', {'form_data': form_data, 'saved_calculations': saved_calculations})
 
@@ -106,6 +108,8 @@ def NOx_fuel(request):
                     headers={'Content-Disposition': 'attachment; filename="NOx_fuel_calculation.txt"'},
                     content=content.encode('utf-8')
                 )
+            elif 'clear' in request.POST:
+                form_data = {}
 
     return render(request, 'NOx_fuel.html', {'form_data': form_data, 'saved_calculations': saved_calculations})
 
@@ -139,6 +143,8 @@ def SOx(request):
                     headers={'Content-Disposition': 'attachment; filename="SOx_calculation.txt"'},
                     content=content.encode('utf-8')
                 )
+            elif 'clear' in request.POST:
+                form_data = {}
 
     return render(request, 'SOx.html', {'form_data': form_data, 'saved_calculations': saved_calculations})
 
